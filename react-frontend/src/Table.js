@@ -15,6 +15,7 @@ function TableHeader()  {
 
 
 function TableBody(props) {
+  //extract data from prop
   const rows = props.characterData.map((row, index) => {
     return (
       <tr key={index}>
@@ -33,7 +34,6 @@ function TableBody(props) {
        </tbody>
    );
 }
-
 
 function Table(props) {
     return (
