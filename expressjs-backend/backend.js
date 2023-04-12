@@ -47,6 +47,7 @@ app.get('/', (req, res) => {
 
 //GET response for /users with name query
 app.get('/users', (req, res) => {
+    //user id inputted in query (?name=...)
     const name = req.query.name;
     if (name != undefined){
         let result = findUserByName(name);
@@ -65,6 +66,7 @@ const findUserByName = (name) => {
 
 //GET response for user/id
 app.get('/users/:id', (req, res) => {
+    //user id parameter of request(parameter of JSON object)
     const id = req.params['id']; //or req.params.id
     let result = findUserById(id);
     if (result === undefined || result.length == 0)
@@ -90,6 +92,24 @@ app.post('/users', (req, res) => {
 
 function addUser(user){
     users['users_list'].push(user);
+}
+
+
+//handle DELETE request
+app.delete('/users/:id', (req, res) => {
+    const id = req.params["id"];
+    deleteUser(id);
+    res.status(200).end();
+});
+
+
+function deleteUser(id) {
+    //find user to delete
+    for (let i = 0; i < users.users_list.length; i++) {
+        if (users.users_list[i].id === id) {
+            users.users_list.splice(i, 1);
+        }
+    }
 }
 
 
