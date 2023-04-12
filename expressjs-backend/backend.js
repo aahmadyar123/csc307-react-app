@@ -2,6 +2,10 @@ const express = require('express'); //import express
 const app = express();              //create instane of express
 const port = 8000;                  //port number
 
+//
+const cors = require('cors');
+app.use(cors());
+
 //allows express to process incoming data in JSON format
 app.use(express.json());
 
