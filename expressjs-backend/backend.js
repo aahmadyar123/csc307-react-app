@@ -45,15 +45,25 @@ app.get('/', (req, res) => {
 });
 
 
-//GET response for /users with name query
+//GET response for /users
 app.get('/users', (req, res) => {
     //user id inputted in query (?name=...)
     const name = req.query.name;
-    if (name != undefined){
+    const job = req.query.job;
+
+    //send back user with requested name and job
+    if (name != undefined && job != undefined) {
+        let result = findUserByNameJob(name, job)
+        result = {users_list: result}
+        res.send(result);
+    }
+    //send back user with requested name
+    else if (name != undefined){
         let result = findUserByName(name);
         result = {users_list: result};
         res.send(result);
     }
+    //send bakk all users
     else{
         res.send(users);
     }
@@ -61,7 +71,11 @@ app.get('/users', (req, res) => {
 
 const findUserByName = (name) => { 
     return users['users_list'].filter( (user) => user['name'] === name); 
-}
+};
+
+const findUserByNameJob = (name, job) => {
+    return users['users_list'].filter( (user) => user.name === name && user.job === job)
+};
 
 
 //GET response for user/id
