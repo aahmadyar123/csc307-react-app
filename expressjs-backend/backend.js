@@ -2,7 +2,7 @@ const express = require('express'); //import express
 const app = express();              //create instane of express
 const port = 8000;                  //port number
 
-//
+//bypass browser restrictions
 const cors = require('cors');
 app.use(cors());
 
@@ -105,11 +105,39 @@ function findUserById(id) {
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
     addUser(userToAdd);
-    res.status(200).end();
+    res.status(201).end();
 });
 
 function addUser(user){
+    let id = generateID();
+    user.id = id;
     users['users_list'].push(user);
+}
+
+
+function generateID() {
+    /*
+    this functions genereates a unique id for users
+    Return:
+        String: id string
+    */
+    let id = "";
+    //generate random letters using ascii for first 3 chars of id
+    for (let i = 0; i < 3; i++)
+        id += String.fromCharCode(Math.floor(Math.random() * (26)) + 97)
+    //generate random numbers for last 3 chars of idg
+    for (let i = 0; i < 3; i++)
+        id += Math.floor(Math.random() * 10);
+
+    //check if unique id
+    for (let i = 0; i < users.users_list.length; i++)
+        //if id not unique generate new one
+        if (id === users.users_list[i].id)
+            return generateID();
+
+    //return unique id 
+    return id;
+
 }
 
 
