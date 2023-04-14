@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 function MyApp() {
-    //store data
+    //array of character data, and function to update data on web page
     const [characters, setCharacters] = useState([]);
 
     //fetch data from backend then add to table
