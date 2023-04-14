@@ -103,14 +103,17 @@ function findUserById(id) {
 
 //handle POST request
 app.post('/users', (req, res) => {
-    const userToAdd = req.body;
-    addUser(userToAdd);
-    res.status(201).end();
+    //assign user id and add to user list
+    const user = req.body;
+    let id = generateID();
+    user.id = id;
+    addUser(user);
+
+    //send back response containing new user and status code
+    res.status(201).send(user)
 });
 
 function addUser(user){
-    let id = generateID();
-    user.id = id;
     users['users_list'].push(user);
 }
 

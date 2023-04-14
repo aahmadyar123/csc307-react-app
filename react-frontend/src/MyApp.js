@@ -33,21 +33,21 @@ function MyApp() {
 
     //add entry to data
     function updateList(person) { 
-        makePostCall(person).then( result => {
-        if (result && result.status === 201)
-            setCharacters([...characters, person] );
+        makePostCall(person).then( response => {
+        if (response && response.status === 201)
+            setCharacters([...characters, response.data] );
     });
-}
+    }
 
     async function makePostCall(person){
-    try {
-        const response = await axios.post('http://localhost:8000/users', person);
-        return response;
-    }
-    catch (error) {
-        console.log(error);
-        return false;
-    }
+        try {
+            const response = await axios.post('http://localhost:8000/users', person);
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+            return false;
+        }
     }
 
 
