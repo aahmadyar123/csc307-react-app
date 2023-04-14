@@ -146,9 +146,12 @@ function generateID() {
 
 //handle DELETE request
 app.delete('/users/:id', (req, res) => {
+    //get id from url parameters
     const id = req.params["id"];
+
+    //delete user by id and send back status code
     deleteUser(id);
-    res.status(200).end();
+    res.status(204).end();
 });
 
 

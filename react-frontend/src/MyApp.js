@@ -25,11 +25,33 @@ function MyApp() {
 
     //remove entry from data
     function removeOneCharacter (index) {
-        const updated = characters.filter((character, i) => {
-            return i !== index
-        });
-        setCharacters(updated);
-  }
+        //get id from index 
+        let id = characters[index].id;
+
+        //send DELETE request to api
+        makeDeleteCall(id).then( response => {
+            //if deletion successful indicated by stauts code, delete from frontend
+            if (response.status === 204) {
+                const updated = characters.filter((character, i) => {
+                return i !== index
+                });
+                setCharacters(updated);
+            }
+        })
+    }
+
+    //function to send delete request to api
+    async function makeDeleteCall(id) {
+        try {
+            const response = await axios.delete(`http://localhost:8000/users/${id}`);
+            return response;
+        }
+        catch (error) {
+            console.log(error);
+            return false;
+        }
+
+    }
 
     //add entry to data
     function updateList(person) { 
