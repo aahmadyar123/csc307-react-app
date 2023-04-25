@@ -150,8 +150,10 @@ app.delete('/users/:id', (req, res) => {
     const id = req.params["id"];
 
     //delete user by id and send back status code
-    deleteUser(id);
-    res.status(204).end();
+    if (deleteUser(id))
+        res.status(204).end();
+    else
+        res.status(404).end();
 });
 
 
@@ -160,8 +162,10 @@ function deleteUser(id) {
     for (let i = 0; i < users.users_list.length; i++) {
         if (users.users_list[i].id === id) {
             users.users_list.splice(i, 1);
+            return true;
         }
     }
+    return false
 }
 
 
