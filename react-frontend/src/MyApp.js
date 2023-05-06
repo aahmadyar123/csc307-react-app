@@ -26,7 +26,7 @@ function MyApp() {
     //remove entry from data
     function removeOneCharacter (index) {
         //get id from index 
-        let id = characters[index].id;
+        let id = characters[index]._id;
 
         //send DELETE request to api
         makeDeleteCall(id).then( response => {
@@ -42,6 +42,7 @@ function MyApp() {
 
     //function to send delete request to api
     async function makeDeleteCall(id) {
+        console.log("delete call")
         try {
             const response = await axios.delete(`http://localhost:8000/users/${id}`);
             return response;
